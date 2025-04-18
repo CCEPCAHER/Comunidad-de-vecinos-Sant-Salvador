@@ -1,0 +1,483 @@
+/* ==================== BASE GENERAL ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+:root {
+  --primary-color: #00796B; /* Teal oscuro */
+  --primary-dark: #004D40;  /* Teal más oscuro */
+  --primary-light: #4DB6AC; /* Teal claro */
+  --success-color: #66BB6A; /* Verde */
+  --success-dark: #55AA5A; /* Verde más oscuro para hover */
+  --danger-color: #EF5350;  /* Rojo */
+  --danger-dark: #D0403E;  /* Rojo más oscuro para hover */
+  --info-color: #17a2b8; /* Azul Bootstrap info (usado en reporte general) */
+  --info-dark: #138496; /* Azul Bootstrap info hover */
+  --background-color: #F4F6F8; /* Gris azulado muy claro */
+  --card-background: #FFFFFF; /* Blanco puro */
+  --text-color: #333333;   /* Gris oscuro para texto */
+  --border-color: #B2DFDB;  /* Teal muy claro para bordes/separadores */
+  --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra suave */
+  --border-radius: 0.75rem; /* Radio de bordes consistente */
+  --padding-base: 1rem;
+  --margin-base: 1.5rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  /* Base font size is 1rem by default on most browsers */
+}
+
+body {
+  padding: var(--padding-base);
+  overflow-x: hidden;
+}
+
+/* ==================== TIPOGRAFÍA ==================== */
+h1, h2 {
+  text-align: center;
+  color: var(--primary-dark);
+  margin-bottom: var(--padding-base);
+  font-weight: 600; /* Semi-bold */
+}
+
+h1 {
+  font-size: 2rem; /* Aumentado un poco */
+}
+
+h2 {
+  font-size: 1.6rem; /* Aumentado un poco */
+}
+
+/* ==================== CONTENEDOR RESPONSIVO ==================== */
+.container {
+  width: 100%;
+  max-width: 1200px; /* Limitar ancho máximo para mejor legibilidad */
+  margin: 0 auto;
+  padding: 0 var(--padding-base); /* Añadir padding horizontal */
+}
+
+/* ==================== SECCIONES GENERALES (CARDS) ==================== */
+section {
+  width: 100%;
+  background-color: var(--card-background);
+  border-radius: var(--border-radius);
+  box-shadow: 0 6px 16px var(--shadow-color); /* Sombra más pronunciada pero suave */
+  padding: var(--padding-base) * 1.5; /* Más padding interno */
+  margin-bottom: var(--margin-base);
+  border: 1px solid var(--border-color); /* Borde sutil */
+}
+
+/* ==================== FORMULARIOS Y BOTONES DE ACCIÓN ==================== */
+/* Usando flexbox o grid para mejor control en el HTML */
+/* Bootstrap handles the .row display and gap */
+form .row, #action-buttons .row {
+    /* display: flex; */ /* Handled by Bootstrap .row */
+    gap: var(--padding-base); /* Espaciado entre elementos */
+    align-items: flex-end; /* Alinear elementos al final (útil en formularios) */
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--primary-dark);
+    margin-bottom: 0.4rem;
+}
+
+input, select {
+  width: 100%;
+  padding: var(--padding-base) * 0.75 var(--padding-base); /* Ajustar padding */
+  border-radius: var(--border-radius) * 0.5; /* Bordes menos redondeados para inputs */
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: #ffffff; /* Asegurar fondo blanco */
+}
+
+input:focus, select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(0, 121, 107, 0.25); /* Sombra de foco Bootstrap */
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: var(--padding-base) * 0.75 var(--padding-base);
+  border-radius: var(--border-radius) * 0.5;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+button.btn-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+button.btn-primary:hover {
+  background-color: var(--primary-dark);
+}
+
+button.btn-success {
+  background-color: var(--success-color);
+  color: #fff;
+}
+button.btn-success:hover {
+  background-color: var(--success-dark); /* Usar variable para hover */
+}
+
+button.btn-info {
+  background-color: var(--info-color); /* Usar variable Bootstrap info */
+  color: #fff; /* Texto blanco sobre azul */
+}
+button.btn-info:hover {
+  background-color: var(--info-dark); /* Usar variable para hover */
+}
+
+button.btn-danger {
+  background-color: var(--danger-color);
+  color: #fff;
+}
+button.btn-danger:hover {
+  background-color: var(--danger-dark); /* Usar variable para hover */
+}
+
+
+/* ==================== ESTADO DE PAGOS ==================== */
+#paymentStatus {
+  /* Removed: display: flex; */ /* Bootstrap's .row already handles this */
+  /* Removed: flex-direction: column; */ /* This was overriding Bootstrap grid */
+  flex-wrap: wrap; /* Ensure items wrap to new rows */
+  gap: var(--padding-base); /* Espacio entre las cards de estado (funciona con Bootstrap 5+) */
+  width: 100%; /* Ensure it takes full width */
+  /* Bootstrap's .row handles display: flex and flex-direction: row */
+  /* align-items: stretch is default for flex items, which helps with height */
+}
+
+.payment-status {
+  background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); /* Degradado suave */
+  border-left: 6px solid var(--primary-color); /* Borde de color */
+  padding: var(--padding-base);
+  border-radius: var(--border-radius) * 0.75; /* Bordes redondeados */
+  width: 100%; /* Ensure it occupies the full width of its Bootstrap column */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Sombra más ligera */
+  transition: transform 0.2s ease-in-out; /* Animación al pasar el ratón */
+  display: flex; /* Use flexbox for internal layout */
+  flex-direction: column; /* Stack content inside vertically */
+  justify-content: space-between; /* Distribute space vertically (optional, depends on desired look) */
+  /* min-height: 180px; */ /* You could set a min-height, but be careful with content overflow */
+}
+
+.payment-status:hover {
+    transform: translateY(-3px); /* Efecto sutil al pasar el ratón */
+}
+
+.payment-status.unpaid {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); /* Degradado rojo */
+  border-left-color: var(--danger-color);
+}
+
+.payment-status h6 {
+  font-size: 1.2rem; /* Título un poco más grande */
+  margin-bottom: 0.5rem;
+  color: var(--primary-dark);
+  font-weight: 700; /* Negrita */
+}
+
+.payment-status p {
+    margin-bottom: 0.3rem; /* Espaciado entre párrafos */
+    font-size: 0.95rem; /* Slightly less than 1rem for density */
+    flex-shrink: 0; /* Prevent paragraphs from shrinking */
+}
+
+.payment-status p:last-of-type { /* Target the last paragraph specifically */
+    margin-bottom: 0;
+    margin-top: auto; /* Push the last element (Debe) to the bottom if using flex column */
+}
+
+
+.payment-status .due {
+  font-weight: 700; /* Bold */
+  color: var(--danger-color);
+  font-size: 1.1rem; /* Resaltar el importe pendiente */
+}
+
+.payment-status.paid .due {
+  color: var(--success-color); /* Verde para "Debe: €0.00" */
+}
+
+
+
+/* ==================== RESUMEN MENSUAL ==================== */
+#monthlySummary p {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+#monthlySummary p strong {
+    color: var(--primary-dark);
+}
+
+
+/* ==================== TABLAS ==================== */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto; /* Permitir scroll horizontal si es necesario */
+  -webkit-overflow-scrolling: touch; /* Mejorar scroll en iOS */
+  border: 1px solid var(--border-color); /* Borde alrededor de la tabla */
+  border-radius: var(--border-radius) * 0.5;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem; /* Base font size for table text */
+  background-color: var(--card-background); /* Fondo blanco para la tabla */
+}
+
+.table thead th {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 0.8rem var(--padding-base); /* Más padding */
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid var(--primary-dark); /* Borde más oscuro */
+}
+
+.table tbody td {
+  padding: 0.8rem var(--padding-base); /* Más padding */
+  border-bottom: 1px solid #eeeeee; /* Línea más fina entre filas */
+  color: var(--text-color);
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Gris muy claro para filas alternas */
+}
+
+.table tbody tr:hover {
+  background-color: #e0f7fa; /* Teal muy claro al pasar el ratón */
+  cursor: pointer; /* Indicar que la fila es clickeable (para detalle de gasto) */
+}
+
+/* Estilo específico para la fila de gasto clickeable */
+.table tbody tr.table-warning:hover {
+     background-color: #ffe0b2; /* Naranja claro al pasar el ratón en fila de gasto */
+}
+
+
+.table button {
+  padding: 0.4rem 0.8rem; /* Padding para botones dentro de la tabla */
+  border-radius: 0.25rem; /* Bordes más pequeños para botones */
+  font-size: 0.8rem; /* Fuente más pequeña */
+}
+
+
+/* ==================== RESPONSIVE MOBILE ==================== */
+@media (max-width: 767px) { /* Target tablets and phones */
+  /* --- Adjust BASE font size for mobile --- */
+  body {
+    font-size: 1.1rem; /* <-- Increased base font size (approx 17.6px) */
+    padding: var(--padding-base) * 0.75; /* Slightly less padding on the edges */
+  }
+
+  .container {
+     padding: 0 var(--padding-base) * 0.5; /* Reduce horizontal padding inside container */
+  }
+
+  /* Adjust heading sizes for mobile, will now be relative to the new body font-size */
+  h1 {
+    font-size: 1.7rem; /* Adjusted slightly */
+  }
+
+  h2 {
+    font-size: 1.3rem; /* Adjusted slightly */
+    margin-bottom: var(--padding-base) * 0.75; /* Ensure space below headings */
+  }
+
+  section {
+     padding: var(--padding-base); /* Reduce internal padding of sections */
+     margin-bottom: var(--margin-base) * 0.75; /* Reduce space between sections */
+  }
+
+  /* Form and Action Buttons Layout */
+  form .row, #action-buttons .row {
+      flex-direction: column; /* Stack form/action items vertically */
+      gap: var(--padding-base) * 0.75; /* Slightly less space between stacked items */
+      align-items: stretch; /* Stretch items to fill width */
+  }
+
+    /* Adjust padding for form elements, font size is inherited */
+   input, select, button {
+       padding: var(--padding-base) * 0.6 var(--padding-base) * 0.75; /* Adjust padding */
+       /* Font size inherited from body (1.1rem) or parent */
+   }
+
+  /* Payment Status Boxes */
+  /* They stack automatically due to Bootstrap cols */
+  .payment-status {
+      padding: var(--padding-base) * 0.75; /* Slightly less internal padding */
+  }
+
+  .payment-status h6 {
+    font-size: 1.1rem; /* Keep title size reasonable (relative to new body font-size) */
+  }
+
+   .payment-status p {
+       font-size: 1rem; /* Will now be 1rem * 1.1rem = 1.1rem (approx 17.6px) */
+   }
+
+    .payment-status .due {
+        font-size: 1.1rem; /* Will now be 1.1rem * 1.1rem = 1.21rem (approx 19.36px) */
+    }
+
+
+  /* Tables */
+  /* Base font size for table text. Now relative to body font-size. */
+  .table {
+    font-size: 1rem; /* Will now be 1rem * 1.1rem = 1.1rem (approx 17.6px) */
+  }
+
+  .table thead {
+    display: none; /* Hide table headers on small screens */
+  }
+  .table, .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+  .table tr {
+    margin-bottom: var(--padding-base);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius) * 0.5;
+    background-color: var(--card-background);
+    padding: var(--padding-base) * 0.75;
+  }
+   .table tbody td {
+       border-bottom: none;
+       position: relative;
+       padding-left: 55%; /* Increase space for the pseudo-element label */
+       text-align: right; /* Align content to the right */
+       word-break: break-word; /* Prevent long words from overflowing */
+       min-height: 40px; /* Ensure a minimum height for tap target */
+   }
+   .table tbody td::before {
+       content: attr(data-label);
+       position: absolute;
+       left: var(--padding-base);
+       width: calc(55% - var(--padding-base) * 2); /* Adjust label width */
+       padding-right: var(--padding-base);
+       white-space: nowrap;
+       font-weight: 600;
+       color: var(--primary-dark);
+       text-align: left; /* Align label to the left */
+       overflow: hidden; /* Hide overflow if label is too long */
+       text-overflow: ellipsis; /* Add ellipsis if label is truncated */
+   }
+    .table tbody td:last-child { /* Style for the action button cell */
+        text-align: center;
+        padding-left: var(--padding-base); /* Reset padding */
+    }
+     .table tbody td:last-child::before { /* Hide label for action cell */
+         content: none;
+     }
+     /* Adjust button size in table on mobile */
+     .table button {
+         font-size: 0.9rem; /* Will now be 0.9rem * 1.1rem = 0.99rem (approx 15.8px) */
+         padding: 0.5rem 1rem;
+     }
+}
+
+/* Further adjustments for very small phones */
+@media (max-width: 400px) {
+    /* Adjust body font size further down if needed on tiny screens */
+    /* body { font-size: 1.05rem; } */
+
+     .table tbody td {
+          padding-left: 50%; /* Slightly less space for label on very small screens */
+     }
+     .table tbody td::before {
+         width: calc(50% - var(--padding-base) * 2); /* Adjust label width */
+     }
+      /* Potentially adjust padding on extreme small screens */
+     body {
+         padding: var(--padding-base) * 0.5;
+     }
+     .container {
+         padding: 0;
+     }
+     section {
+         padding: var(--padding-base) * 0.75;
+     }
+     input, select, button {
+         padding: var(--padding-base) * 0.5 var(--padding-base) * 0.6;
+     }
+     .payment-status {
+         padding: var(--padding-base) * 0.6;
+     }
+}
+
+
+/* ==================== MODALES ==================== */
+.modal-content {
+  border-radius: var(--border-radius);
+  box-shadow: 0 12px 24px var(--shadow-color);
+  border: none; /* Eliminar borde por defecto del modal */
+}
+
+.modal-header {
+  background-color: var(--primary-color);
+  color: #fff;
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+  padding: var(--padding-base) * 1.25 var(--padding-base) * 1.5;
+  border-bottom: none; /* Eliminar borde inferior del header */
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-header .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%); /* Hacer el icono blanco */
+}
+
+.modal-body {
+  padding: var(--padding-base) * 1.5;
+  background-color: #f8f9fa; /* Fondo ligeramente gris en el body del modal */
+}
+
+.modal-body .table {
+    background-color: #fff; /* Fondo blanco para la tabla dentro del modal */
+    margin-bottom: 0; /* Eliminar margen inferior de la tabla en el modal */
+}
+
+.modal-body .table thead th {
+    background-color: var(--primary-light); /* Color de header de tabla diferente en el modal */
+    color: var(--text-color);
+    border-bottom-color: var(--primary-color);
+}
+
+.modal-body .table tbody td {
+    border-bottom: 1px solid #e9ecef; /* Borde de fila más claro */
+}
+
+.modal-body .table tbody tr:last-child td {
+    border-bottom: none; /* Eliminar borde de la última fila */
+}
+
+/* Utility class for consistent spacing */
+.mb-5 {
+    margin-bottom: var(--margin-base) !important;
+}
+.py-4 {
+     padding-top: var(--padding-base) * 2 !important;
+     padding-bottom: var(--padding-base) * 2 !important;
+}
