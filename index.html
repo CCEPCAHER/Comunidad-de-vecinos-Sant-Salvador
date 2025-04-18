@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestión Comunidad de Propietarios</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <div class="container py-4">
+    <h1 class="mb-4">Gestión Comunidad de Propietarios</h1>
+
+    <section id="action-buttons" class="card p-3 mb-5">
+      <h2>Acciones</h2>
+      <div class="row g-2">
+        <div class="col-md-6">
+          <button id="btnGenerateGeneralReport" class="btn btn-info w-100">Generar Reporte General (PDF)</button>
+        </div>
+        <div class="col-md-6">
+          <button id="btnClearData" class="btn btn-danger w-100">Borrar Todos los Datos</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="expense-section" class="card p-3 mb-5">
+      <h2>Registrar Gasto</h2>
+      <form id="expenseForm" class="row g-2 align-items-end">
+        <div class="col-md-5">
+          <label for="expenseDescription" class="form-label">Descripción</label>
+          <input type="text" id="expenseDescription" class="form-control" placeholder="Ej: Luz, Agua..." required>
+        </div>
+        <div class="col-md-3">
+          <label for="expenseAmount" class="form-label">Importe (€)</label>
+          <input type="number" id="expenseAmount" class="form-control" step="0.01" required>
+        </div>
+        <div class="col-md-2">
+          <label for="expenseType" class="form-label">Categoría</label>
+          <select id="expenseType" class="form-select">
+            <option value="general">General</option>
+            <option value="mantenimiento">Mantenimiento</option>
+            <option value="limpieza">Limpieza</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary w-100">Añadir Gasto</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="payment-section" class="card p-3 mb-5">
+      <h2>Registrar Pago</h2>
+      <div class="row g-2 align-items-end">
+        <div class="col-md-5">
+          <label for="residentSelect" class="form-label">Propietario</label>
+          <select id="residentSelect" class="form-select"></select>
+        </div>
+        <div class="col-md-3">
+          <label for="paymentAmount" class="form-label">Importe (€)</label>
+          <input type="number" id="paymentAmount" class="form-control" step="0.01" required>
+        </div>
+        <div class="col-md-2">
+          <button id="btnRegisterPayment" class="btn btn-success w-100">Registrar Pago</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="paymentStatus" class="row g-3 mb-5"></section>
+
+    <section id="summary" class="card p-3 mb-5">
+      <h2>Resumen Mensual</h2>
+      <div id="monthlySummary"></div>
+    </section>
+
+    <section id="history-section" class="card p-3 mb-5">
+      <h2>Historial de Movimientos</h2>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Descripción</th>
+              <th>Importe (€)</th>
+              <th>Tipo</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="historyTable"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal fade" id="expenseDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="expenseTitle" class="modal-title">Detalle de Gasto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Propietario</th>
+                <th>Coef. (%)</th>
+                <th>Importe (€)</th>
+              </tr>
+            </thead>
+            <tbody id="expenseDetailContent"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.4.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
