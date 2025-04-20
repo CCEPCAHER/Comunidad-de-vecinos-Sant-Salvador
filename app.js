@@ -46,9 +46,10 @@ class Payment {
 
 // —––– DATOS INICIALES —––––––––––––––––––––––––––––––––––––––––––––––
 const residents = [
-  new Property('Juan Sabio','Es:1 Pl:00 Pt:01','Almacén-Estacionamiento','29 m2','1,97%'),
-  new Property('Pedro','Es:1 Pl:00 Pt:02','Almacén-Estacionamiento','50 m2','2,73%'),
-  new Property('Mateo','Es:1 Pl:00 Pt:04','Almacén-Estacionamiento','33 m2','2,63%'),
+  new Property('Juan Sabio','Es:1 Pl:00 Pt:01','tienda 1','29 m2','1,97%'),
+  new Property('Pedro','Es:1 Pl:00 Pt:02','tienda 2','50 m2','2,73%'),
+  new Property('Pedro','Es:1 Pl:00 Pt:03','tienda 3','50 m2','3,88%'),
+  new Property('Mateo','Es:1 Pl:00 Pt:04','tienda 4','33 m2','2,63%'),
   new Property('Pepito','Es:1 Pl:EN Pt:01','Residencial','103 m2','5,97%'),
   new Property('Humberto','Es:1 Pl:EN Pt:02','Residencial','87 m2','6,37%'),
   new Property('Olga','Es:1 Pl:01 Pt:01','Residencial','108 m2','5,97%'),
