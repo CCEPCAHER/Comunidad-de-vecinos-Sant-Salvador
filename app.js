@@ -46,23 +46,23 @@ class Payment {
 
 // —––– DATOS INICIALES —––––––––––––––––––––––––––––––––––––––––––––––
 const residents = [
-  new Property('Juan Sabio','Es:1 Pl:00 Pt:01','tienda 1','29 m2','1,97%'),
-  new Property('Pedro','Es:1 Pl:00 Pt:02','tienda 2','50 m2','2,73%'),
-  new Property('Pedro','Es:1 Pl:00 Pt:03','tienda 3','50 m2','3,88%'),
-  new Property('Mateo','Es:1 Pl:00 Pt:04','tienda 4','33 m2','2,63%'),
-  new Property('Pepito','Es:1 Pl:EN Pt:01','Residencial','103 m2','5,97%'),
-  new Property('Humberto','Es:1 Pl:EN Pt:02','Residencial','87 m2','6,37%'),
-  new Property('Olga','Es:1 Pl:01 Pt:01','Residencial','108 m2','5,97%'),
-  new Property('Isabel Cortes','Es:1 Pl:01 Pt:02','Residencial','92 m2','6,37%'),
-  new Property('Raúl Bolaños','Es:1 Pl:02 Pt:01','Residencial','108 m2','5,97%'),
-  new Property('Laura Andrés','Es:1 Pl:02 Pt:02','Residencial','92 m2','6,37%'),
-  new Property('Vanessa Intriago','Es:1 Pl:03 Pt:01','Residencial','108 m2','5,97%'),
-  new Property('Lorenzo Góngora','Es:1 Pl:03 Pt:02','Residencial','92 m2','6,37%'),
-  new Property('Felipe Casanova','Es:1 Pl:04 Pt:01','Residencial','108 m2','5,97%'),
-  new Property('Cristián Amada','Es:1 Pl:04 Pt:02','Residencial','57 m2','5,44%'),
-  new Property('Rosa Martínez','Es:1 Pl:05 Pt:01','Residencial','132 m2','8,78%'),
-  new Property('Franklin Carranza','Es:1 Pl:06 Pt:01','Residencial','113 m2','7,29%'),
-  new Property('Ramon Valdez','Es:1 Pl:07 Pt:01','Residencial','180 m2','11,94%')
+  new Property('tienda 1 ','Es:1 Pl:00 Pt:01','tienda 1','29 m2','1,97%'),
+  new Property('tienda 2','Es:1 Pl:00 Pt:02','tienda 2','50 m2','2,73%'),
+  new Property('tienda 3','Es:1 Pl:00 Pt:03','tienda 3','50 m2','3,88%'),
+  new Property('tienda 4','Es:1 Pl:00 Pt:04','tienda 4','33 m2','2,63%'),
+  new Property('entresuelo primera ','Es:1 Pl:EN Pt:01','Residencial','103 m2','5,97%'),
+  new Property('entresuelo segunda','Es:1 Pl:EN Pt:02','Residencial','87 m2','6,37%'),
+  new Property('primero primera','Es:1 Pl:01 Pt:01','Residencial','108 m2','5,97%'),
+  new Property('primero segunda ','Es:1 Pl:01 Pt:02','Residencial','92 m2','6,37%'),
+  new Property('segungundo primera','Es:1 Pl:02 Pt:01','Residencial','108 m2','5,97%'),
+  new Property('segundo segunda','Es:1 Pl:02 Pt:02','Residencial','92 m2','6,37%'),
+  new Property('tercero primera','Es:1 Pl:03 Pt:01','Residencial','108 m2','5,97%'),
+  new Property('tercero segunda','Es:1 Pl:03 Pt:02','Residencial','92 m2','6,37%'),
+  new Property('cuarto primera','Es:1 Pl:04 Pt:01','Residencial','108 m2','5,97%'),
+  new Property('cuarto segunda','Es:1 Pl:04 Pt:02','Residencial','57 m2','5,44%'),
+  new Property('quinto','Es:1 Pl:05 Pt:01','Residencial','132 m2','8,78%'),
+  new Property('sexto','Es:1 Pl:06 Pt:01','Residencial','113 m2','7,29%'),
+  new Property('septimo','Es:1 Pl:07 Pt:01','Residencial','180 m2','11,94%')
 ];
 
 let expenses = [];
