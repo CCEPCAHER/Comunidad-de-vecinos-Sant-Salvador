@@ -1,483 +1,548 @@
-/* ==================== BASE GENERAL ==================== */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+/* ==================== NUEVO ESTILO: "Gestión Clara" ==================== */
 
+/* --- Fuentes --- */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@600;700&display=swap');
+
+/* --- Variables CSS --- */
 :root {
-  --primary-color: #00796B; /* Teal oscuro */
-  --primary-dark: #004D40;  /* Teal más oscuro */
-  --primary-light: #4DB6AC; /* Teal claro */
-  --success-color: #66BB6A; /* Verde */
-  --success-dark: #55AA5A; /* Verde más oscuro para hover */
-  --danger-color: #EF5350;  /* Rojo */
-  --danger-dark: #D0403E;  /* Rojo más oscuro para hover */
-  --info-color: #17a2b8; /* Azul Bootstrap info (usado en reporte general) */
-  --info-dark: #138496; /* Azul Bootstrap info hover */
-  --background-color: #F4F6F8; /* Gris azulado muy claro */
-  --card-background: #FFFFFF; /* Blanco puro */
-  --text-color: #333333;   /* Gris oscuro para texto */
-  --border-color: #B2DFDB;  /* Teal muy claro para bordes/separadores */
-  --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra suave */
-  --border-radius: 0.75rem; /* Radio de bordes consistente */
-  --padding-base: 1rem;
-  --margin-base: 1.5rem;
+  /* Paleta de Colores Principal */
+  --clr-primary: #2C3E50;       /* Azul Petróleo Oscuro (Énfasis, Títulos) */
+  --clr-primary-light: #34495E; /* Azul Petróleo Medio (Botones, Headers) */
+  --clr-primary-lighter: #95A5A6; /* Gris Azulado Claro (Bordes suaves, Info secundaria) */
+
+  /* Colores de Acento y Estado */
+  --clr-accent: #F39C12;        /* Ámbar/Dorado (Resaltados, Advertencias suaves) */
+  --clr-accent-dark: #D35400;   /* Naranja Quemado (Hover Accent) */
+  --clr-success: #27AE60;       /* Verde Esmeralda (Pagado, Éxito) */
+  --clr-success-light: #E0F2F1; /* Verde muy pálido (Fondo estado pagado) */
+  --clr-danger: #C0392B;        /* Rojo Carmesí (Deuda, Eliminar) */
+  --clr-danger-light: #FDECEA; /* Rojo muy pálido (Fondo estado impagado) */
+  --clr-info: #3498DB;          /* Azul Cielo (Información, Reportes) */
+  --clr-info-light: #D6EAF8;    /* Azul muy pálido */
+
+  /* Colores de Fondo y Texto */
+  --clr-bg: #ECF0F1;            /* Gris Muy Claro (Fondo general) */
+  --clr-card-bg: #FFFFFF;       /* Blanco (Fondo de tarjetas, inputs) */
+  --clr-text: #2F4F4F;          /* Gris Pizarra Oscuro (Texto principal) */
+  --clr-text-light: #7F8C8D;    /* Gris Medio (Texto secundario, placeholders) */
+  --clr-border: #BDC3C7;        /* Gris Claro (Bordes generales) */
+  --clr-border-light: #EAECEE;  /* Gris Muy Claro (Separadores internos) */
+
+  /* Tipografía */
+  --font-body: 'Lato', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
+
+  /* Otros */
+  --border-radius: 6px;         /* Bordes ligeramente redondeados */
+  --shadow-sm: 0 2px 4px rgba(44, 62, 80, 0.08);
+  --shadow-md: 0 4px 10px rgba(44, 62, 80, 0.1);
+  --shadow-lg: 0 6px 15px rgba(44, 62, 80, 0.12);
+  --transition-fast: all 0.2s ease-in-out;
+  --transition-normal: all 0.3s ease-in-out;
 }
 
-* {
+/* --- Reseteo y Base --- */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
-  width: 100%;
-  min-height: 100vh;
-  font-family: 'Open Sans', sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  line-height: 1.6;
-  /* Base font size is 1rem by default on most browsers */
+html {
+  font-size: 100%; /* 16px por defecto */
+  scroll-behavior: smooth;
 }
 
 body {
-  padding: var(--padding-base);
+  font-family: var(--font-body);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+  line-height: 1.65;
+  padding: 1rem 0; /* Espacio arriba/abajo, el container maneja los lados */
   overflow-x: hidden;
 }
 
-/* ==================== TIPOGRAFÍA ==================== */
-h1, h2 {
-  text-align: center;
-  color: var(--primary-dark);
-  margin-bottom: var(--padding-base);
-  font-weight: 600; /* Semi-bold */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem; /* Padding lateral */
+}
+
+/* --- Tipografía --- */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--clr-primary);
+  margin-bottom: 0.8em;
+  line-height: 1.3;
+  font-weight: 700;
 }
 
 h1 {
-  font-size: 2rem; /* Aumentado un poco */
+  font-size: clamp(2rem, 5vw, 2.8rem); /* Tamaño fluido */
+  text-align: center;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-h2 {
-  font-size: 1.6rem; /* Aumentado un poco */
+h2 { /* Títulos de sección/card */
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--clr-primary-lighter);
+  font-weight: 600; /* Ligeramente menos pesado que h1 */
 }
 
-/* ==================== CONTENEDOR RESPONSIVO ==================== */
-.container {
-  width: 100%;
-  max-width: 1200px; /* Limitar ancho máximo para mejor legibilidad */
-  margin: 0 auto;
-  padding: 0 var(--padding-base); /* Añadir padding horizontal */
+h6 { /* Títulos dentro de payment-status */
+    font-size: 1.1rem;
+    color: var(--clr-primary);
+    font-weight: 700;
+    margin-bottom: 0.6rem;
 }
 
-/* ==================== SECCIONES GENERALES (CARDS) ==================== */
-section {
-  width: 100%;
-  background-color: var(--card-background);
+p {
+  margin-bottom: 1rem;
+}
+p:last-child {
+    margin-bottom: 0;
+}
+
+a {
+  color: var(--clr-info);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+a:hover {
+  color: var(--clr-accent-dark);
+  text-decoration: underline;
+}
+
+small {
+    font-size: 0.9rem;
+    color: var(--clr-text-light);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--clr-border-light);
+    margin: 1rem 0;
+}
+
+/* --- Tarjetas (Sections / Cards Bootstrap) --- */
+.card {
+  background-color: var(--clr-card-bg);
   border-radius: var(--border-radius);
-  box-shadow: 0 6px 16px var(--shadow-color); /* Sombra más pronunciada pero suave */
-  padding: var(--padding-base) * 1.5; /* Más padding interno */
-  margin-bottom: var(--margin-base);
-  border: 1px solid var(--border-color); /* Borde sutil */
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--clr-border-light);
+  margin-bottom: 1.5rem;
+  overflow: hidden; /* Para que el header no sobresalga */
+  transition: var(--transition-normal);
+}
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-3px);
 }
 
-/* ==================== FORMULARIOS Y BOTONES DE ACCIÓN ==================== */
-/* Usando flexbox o grid para mejor control en el HTML */
-/* Bootstrap handles the .row display and gap */
-form .row, #action-buttons .row {
-    /* display: flex; */ /* Handled by Bootstrap .row */
-    gap: var(--padding-base); /* Espaciado entre elementos */
-    align-items: flex-end; /* Alinear elementos al final (útil en formularios) */
+.card-header {
+  background-color: var(--clr-primary-light);
+  color: var(--clr-card-bg);
+  padding: 0.8rem 1.2rem;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  border-bottom: 1px solid var(--clr-primary);
+  font-size: 1.1rem;
 }
 
+.card-body {
+  padding: 1.2rem;
+}
+
+.card-footer {
+    background-color: #f8f9fa; /* Fondo ligeramente diferente para footer */
+    padding: 0.8rem 1.2rem;
+    border-top: 1px solid var(--clr-border-light);
+}
+
+/* Zona Peligrosa */
+.card.border-danger {
+    border-left: 5px solid var(--clr-danger);
+    border-color: var(--clr-danger-light); /* Borde general más suave */
+}
+.card.border-danger .card-header {
+    background-color: var(--clr-danger);
+    border-bottom-color: var(--clr-danger);
+}
+
+/* --- Formularios --- */
 .form-label {
-    font-weight: 600;
-    color: var(--primary-dark);
-    margin-bottom: 0.4rem;
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--clr-primary-light);
 }
 
-input, select {
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
   width: 100%;
-  padding: var(--padding-base) * 0.75 var(--padding-base); /* Ajustar padding */
-  border-radius: var(--border-radius) * 0.5; /* Bordes menos redondeados para inputs */
-  border: 1px solid var(--border-color);
+  padding: 0.75rem 1rem;
   font-size: 1rem;
-  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  background-color: #ffffff; /* Asegurar fondo blanco */
+  font-family: var(--font-body);
+  color: var(--clr-text);
+  background-color: var(--clr-card-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--border-radius);
+  transition: var(--transition-fast);
+}
+input::placeholder, textarea::placeholder {
+    color: var(--clr-text-light);
+    opacity: 0.8;
 }
 
-input:focus, select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 0.25rem rgba(0, 121, 107, 0.25); /* Sombra de foco Bootstrap */
+input:focus, select:focus, textarea:focus {
   outline: none;
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.15);
 }
 
-button {
-  width: 100%;
-  padding: var(--padding-base) * 0.75 var(--padding-base);
-  border-radius: var(--border-radius) * 0.5;
-  font-size: 1rem;
+select {
+  appearance: none; /* Quitar estilo nativo */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232C3E50%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.7em auto;
+  padding-right: 2.5rem; /* Espacio para el icono */
+}
+
+/* --- Botones --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* Espacio entre icono y texto */
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
   font-weight: 600;
   border: none;
+  border-radius: var(--border-radius);
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+}
+.btn svg {
+    width: 1em;
+    height: 1em;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    opacity: 0.9;
+}
+.btn:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
 }
 
-button.btn-primary {
-  background-color: var(--primary-color);
-  color: #fff;
-}
-button.btn-primary:hover {
-  background-color: var(--primary-dark);
+.btn-primary { background-color: var(--clr-primary-light); color: #fff; }
+.btn-primary:hover { background-color: var(--clr-primary); }
+
+.btn-secondary { background-color: var(--clr-primary-lighter); color: var(--clr-primary); }
+.btn-secondary:hover { background-color: var(--clr-text-light); color: #fff; }
+
+.btn-success { background-color: var(--clr-success); color: #fff; }
+.btn-success:hover { background-color: #229954; } /* Más oscuro */
+
+.btn-danger { background-color: var(--clr-danger); color: #fff; }
+.btn-danger:hover { background-color: #A93226; } /* Más oscuro */
+
+.btn-warning { background-color: var(--clr-accent); color: #fff; }
+.btn-warning:hover { background-color: var(--clr-accent-dark); }
+
+.btn-info { background-color: var(--clr-info); color: #fff; }
+.btn-info:hover { background-color: #2E86C1; } /* Más oscuro */
+
+/* Botones pequeños (ej. en tablas) */
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
 }
 
-button.btn-success {
-  background-color: var(--success-color);
-  color: #fff;
-}
-button.btn-success:hover {
-  background-color: var(--success-dark); /* Usar variable para hover */
-}
+/* Botón ancho completo */
+.w-100 { width: 100%; }
+.d-grid .btn { width: 100%; } /* Para compatibilidad si usas d-grid */
 
-button.btn-info {
-  background-color: var(--info-color); /* Usar variable Bootstrap info */
-  color: #fff; /* Texto blanco sobre azul */
-}
-button.btn-info:hover {
-  background-color: var(--info-dark); /* Usar variable para hover */
-}
-
-button.btn-danger {
-  background-color: var(--danger-color);
-  color: #fff;
-}
-button.btn-danger:hover {
-  background-color: var(--danger-dark); /* Usar variable para hover */
-}
-
-
-/* ==================== ESTADO DE PAGOS ==================== */
+/* --- Estado de Pagos --- */
 #paymentStatus {
-  /* Removed: display: flex; */ /* Bootstrap's .row already handles this */
-  /* Removed: flex-direction: column; */ /* This was overriding Bootstrap grid */
-  flex-wrap: wrap; /* Ensure items wrap to new rows */
-  gap: var(--padding-base); /* Espacio entre las cards de estado (funciona con Bootstrap 5+) */
-  width: 100%; /* Ensure it takes full width */
-  /* Bootstrap's .row handles display: flex and flex-direction: row */
-  /* align-items: stretch is default for flex items, which helps with height */
+  gap: 1rem; /* Espacio entre cards */
 }
-
 .payment-status {
-  background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); /* Degradado suave */
-  border-left: 6px solid var(--primary-color); /* Borde de color */
-  padding: var(--padding-base);
-  border-radius: var(--border-radius) * 0.75; /* Bordes redondeados */
-  width: 100%; /* Ensure it occupies the full width of its Bootstrap column */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Sombra más ligera */
-  transition: transform 0.2s ease-in-out; /* Animación al pasar el ratón */
-  display: flex; /* Use flexbox for internal layout */
-  flex-direction: column; /* Stack content inside vertically */
-  justify-content: space-between; /* Distribute space vertically (optional, depends on desired look) */
-  /* min-height: 180px; */ /* You could set a min-height, but be careful with content overflow */
+  background-color: var(--clr-card-bg);
+  border: 1px solid var(--clr-border-light);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+  min-height: 220px; /* Asegurar altura mínima uniforme */
+  position: relative;
+  overflow: hidden; /* Para pseudo-elementos */
 }
-
+.payment-status::before { /* Indicador visual sutil */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background-color: var(--clr-primary-lighter); /* Color por defecto */
+    transition: var(--transition-fast);
+}
 .payment-status:hover {
-    transform: translateY(-3px); /* Efecto sutil al pasar el ratón */
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: var(--shadow-md);
 }
+.payment-status.paid { background-color: var(--clr-success-light); border-color: var(--clr-success); }
+.payment-status.paid::before { background-color: var(--clr-success); }
 
-.payment-status.unpaid {
-  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); /* Degradado rojo */
-  border-left-color: var(--danger-color);
-}
-
-.payment-status h6 {
-  font-size: 1.2rem; /* Título un poco más grande */
-  margin-bottom: 0.5rem;
-  color: var(--primary-dark);
-  font-weight: 700; /* Negrita */
-}
+.payment-status.unpaid { background-color: var(--clr-danger-light); border-color: var(--clr-danger); }
+.payment-status.unpaid::before { background-color: var(--clr-danger); }
 
 .payment-status p {
-    margin-bottom: 0.3rem; /* Espaciado entre párrafos */
-    font-size: 0.95rem; /* Slightly less than 1rem for density */
-    flex-shrink: 0; /* Prevent paragraphs from shrinking */
+    font-size: 0.9rem;
+    color: var(--clr-text-light);
+    margin-bottom: 0.4rem;
+    line-height: 1.5;
 }
-
-.payment-status p:last-of-type { /* Target the last paragraph specifically */
-    margin-bottom: 0;
-    margin-top: auto; /* Push the last element (Debe) to the bottom if using flex column */
+.payment-status p strong { /* Como "Total Adeudado:" */
+    color: var(--clr-primary-light);
+    font-weight: 700;
 }
-
-
-.payment-status .due {
-  font-weight: 700; /* Bold */
-  color: var(--danger-color);
-  font-size: 1.1rem; /* Resaltar el importe pendiente */
+.payment-status .due { /* Saldo */
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-top: auto; /* Empuja al final */
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--clr-border-light);
 }
+.payment-status.paid .due { color: var(--clr-success); }
+.payment-status.unpaid .due { color: var(--clr-danger); }
 
-.payment-status.paid .due {
-  color: var(--success-color); /* Verde para "Debe: €0.00" */
-}
-
-
-
-/* ==================== RESUMEN MENSUAL ==================== */
+/* --- Resumen Mensual --- */
 #monthlySummary p {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dotted var(--clr-border-light);
+    padding-bottom: 0.6rem;
+}
+#monthlySummary p:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+#monthlySummary strong {
+    color: var(--clr-primary);
+    font-weight: 700;
+    margin-right: 1rem; /* Espacio entre etiqueta y valor */
+}
+#monthlySummary .text-success { color: var(--clr-success) !important; font-weight: 700; }
+#monthlySummary .text-danger { color: var(--clr-danger) !important; font-weight: 700; }
+#monthlySummary small {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--clr-border-light);
 }
 
-#monthlySummary p strong {
-    color: var(--primary-dark);
-}
 
-
-/* ==================== TABLAS ==================== */
+/* --- Tablas --- */
 .table-responsive {
-  width: 100%;
-  overflow-x: auto; /* Permitir scroll horizontal si es necesario */
-  -webkit-overflow-scrolling: touch; /* Mejorar scroll en iOS */
-  border: 1px solid var(--border-color); /* Borde alrededor de la tabla */
-  border-radius: var(--border-radius) * 0.5;
+  overflow-x: auto;
+  border: 1px solid var(--clr-border-light);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  background-color: var(--clr-card-bg);
 }
-
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem; /* Base font size for table text */
-  background-color: var(--card-background); /* Fondo blanco para la tabla */
+  font-size: 0.95rem;
 }
-
 .table thead th {
-  background-color: var(--primary-color);
-  color: #fff;
-  padding: 0.8rem var(--padding-base); /* Más padding */
+  background-color: #f8f9fa; /* Fondo cabecera suave */
+  color: var(--clr-primary);
+  padding: 0.8rem 1rem;
   text-align: left;
-  font-weight: 600;
-  border-bottom: 2px solid var(--primary-dark); /* Borde más oscuro */
+  font-family: var(--font-heading);
+  font-weight: 700;
+  border-bottom: 2px solid var(--clr-primary-lighter);
+  white-space: nowrap; /* Evitar saltos de línea en cabeceras */
 }
-
 .table tbody td {
-  padding: 0.8rem var(--padding-base); /* Más padding */
-  border-bottom: 1px solid #eeeeee; /* Línea más fina entre filas */
-  color: var(--text-color);
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--clr-border-light);
+  vertical-align: middle;
 }
-
-.table tbody tr:nth-child(odd) {
-  background-color: #f9f9f9; /* Gris muy claro para filas alternas */
+.table tbody tr:last-child td {
+    border-bottom: none; /* Quitar borde última fila */
 }
-
 .table tbody tr:hover {
-  background-color: #e0f7fa; /* Teal muy claro al pasar el ratón */
-  cursor: pointer; /* Indicar que la fila es clickeable (para detalle de gasto) */
+  background-color: rgba(52, 152, 219, 0.05); /* Azul muy tenue al pasar el ratón */
+}
+.table tbody tr.table-warning { background-color: rgba(243, 156, 18, 0.08); border-left: 3px solid var(--clr-accent); }
+.table tbody tr.table-warning:hover { background-color: rgba(243, 156, 18, 0.15); cursor: pointer; }
+.table .text-end { text-align: right; }
+.table .text-center { text-align: center; }
+.table td[data-label="Acción"] .btn {
+    margin: 2px; /* Pequeño margen entre botones */
 }
 
-/* Estilo específico para la fila de gasto clickeable */
-.table tbody tr.table-warning:hover {
-     background-color: #ffe0b2; /* Naranja claro al pasar el ratón en fila de gasto */
-}
-
-
-.table button {
-  padding: 0.4rem 0.8rem; /* Padding para botones dentro de la tabla */
-  border-radius: 0.25rem; /* Bordes más pequeños para botones */
-  font-size: 0.8rem; /* Fuente más pequeña */
-}
-
-
-/* ==================== RESPONSIVE MOBILE ==================== */
-@media (max-width: 767px) { /* Target tablets and phones */
-  /* --- Adjust BASE font size for mobile --- */
-  body {
-    font-size: 1.1rem; /* <-- Increased base font size (approx 17.6px) */
-    padding: var(--padding-base) * 0.75; /* Slightly less padding on the edges */
-  }
-
-  .container {
-     padding: 0 var(--padding-base) * 0.5; /* Reduce horizontal padding inside container */
-  }
-
-  /* Adjust heading sizes for mobile, will now be relative to the new body font-size */
-  h1 {
-    font-size: 1.7rem; /* Adjusted slightly */
-  }
-
-  h2 {
-    font-size: 1.3rem; /* Adjusted slightly */
-    margin-bottom: var(--padding-base) * 0.75; /* Ensure space below headings */
-  }
-
-  section {
-     padding: var(--padding-base); /* Reduce internal padding of sections */
-     margin-bottom: var(--margin-base) * 0.75; /* Reduce space between sections */
-  }
-
-  /* Form and Action Buttons Layout */
-  form .row, #action-buttons .row {
-      flex-direction: column; /* Stack form/action items vertically */
-      gap: var(--padding-base) * 0.75; /* Slightly less space between stacked items */
-      align-items: stretch; /* Stretch items to fill width */
-  }
-
-    /* Adjust padding for form elements, font size is inherited */
-   input, select, button {
-       padding: var(--padding-base) * 0.6 var(--padding-base) * 0.75; /* Adjust padding */
-       /* Font size inherited from body (1.1rem) or parent */
-   }
-
-  /* Payment Status Boxes */
-  /* They stack automatically due to Bootstrap cols */
-  .payment-status {
-      padding: var(--padding-base) * 0.75; /* Slightly less internal padding */
-  }
-
-  .payment-status h6 {
-    font-size: 1.1rem; /* Keep title size reasonable (relative to new body font-size) */
-  }
-
-   .payment-status p {
-       font-size: 1rem; /* Will now be 1rem * 1.1rem = 1.1rem (approx 17.6px) */
-   }
-
-    .payment-status .due {
-        font-size: 1.1rem; /* Will now be 1.1rem * 1.1rem = 1.21rem (approx 19.36px) */
-    }
-
-
-  /* Tables */
-  /* Base font size for table text. Now relative to body font-size. */
-  .table {
-    font-size: 1rem; /* Will now be 1rem * 1.1rem = 1.1rem (approx 17.6px) */
-  }
-
-  .table thead {
-    display: none; /* Hide table headers on small screens */
-  }
-  .table, .table tbody, .table tr, .table td {
-    display: block;
-    width: 100%;
-  }
-  .table tr {
-    margin-bottom: var(--padding-base);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius) * 0.5;
-    background-color: var(--card-background);
-    padding: var(--padding-base) * 0.75;
-  }
-   .table tbody td {
-       border-bottom: none;
-       position: relative;
-       padding-left: 55%; /* Increase space for the pseudo-element label */
-       text-align: right; /* Align content to the right */
-       word-break: break-word; /* Prevent long words from overflowing */
-       min-height: 40px; /* Ensure a minimum height for tap target */
-   }
-   .table tbody td::before {
-       content: attr(data-label);
-       position: absolute;
-       left: var(--padding-base);
-       width: calc(55% - var(--padding-base) * 2); /* Adjust label width */
-       padding-right: var(--padding-base);
-       white-space: nowrap;
-       font-weight: 600;
-       color: var(--primary-dark);
-       text-align: left; /* Align label to the left */
-       overflow: hidden; /* Hide overflow if label is too long */
-       text-overflow: ellipsis; /* Add ellipsis if label is truncated */
-   }
-    .table tbody td:last-child { /* Style for the action button cell */
-        text-align: center;
-        padding-left: var(--padding-base); /* Reset padding */
-    }
-     .table tbody td:last-child::before { /* Hide label for action cell */
-         content: none;
-     }
-     /* Adjust button size in table on mobile */
-     .table button {
-         font-size: 0.9rem; /* Will now be 0.9rem * 1.1rem = 0.99rem (approx 15.8px) */
-         padding: 0.5rem 1rem;
-     }
-}
-
-/* Further adjustments for very small phones */
-@media (max-width: 400px) {
-    /* Adjust body font size further down if needed on tiny screens */
-    /* body { font-size: 1.05rem; } */
-
-     .table tbody td {
-          padding-left: 50%; /* Slightly less space for label on very small screens */
-     }
-     .table tbody td::before {
-         width: calc(50% - var(--padding-base) * 2); /* Adjust label width */
-     }
-      /* Potentially adjust padding on extreme small screens */
-     body {
-         padding: var(--padding-base) * 0.5;
-     }
-     .container {
-         padding: 0;
-     }
-     section {
-         padding: var(--padding-base) * 0.75;
-     }
-     input, select, button {
-         padding: var(--padding-base) * 0.5 var(--padding-base) * 0.6;
-     }
-     .payment-status {
-         padding: var(--padding-base) * 0.6;
-     }
-}
-
-
-/* ==================== MODALES ==================== */
+/* --- Modales --- */
 .modal-content {
   border-radius: var(--border-radius);
-  box-shadow: 0 12px 24px var(--shadow-color);
-  border: none; /* Eliminar borde por defecto del modal */
+  border: none;
+  box-shadow: var(--shadow-lg);
 }
-
 .modal-header {
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: var(--clr-primary);
+  color: var(--clr-card-bg);
+  padding: 1rem 1.5rem;
+  border-bottom: none;
   border-top-left-radius: var(--border-radius);
   border-top-right-radius: var(--border-radius);
-  padding: var(--padding-base) * 1.25 var(--padding-base) * 1.5;
-  border-bottom: none; /* Eliminar borde inferior del header */
 }
-
 .modal-title {
-    font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--clr-card-bg); /* Asegurar color */
 }
-
 .modal-header .btn-close {
-  filter: invert(1) grayscale(100%) brightness(200%); /* Hacer el icono blanco */
+  filter: brightness(0) invert(1); /* Icono blanco */
+  opacity: 0.8;
 }
+.modal-header .btn-close:hover { opacity: 1; }
 
 .modal-body {
-  padding: var(--padding-base) * 1.5;
-  background-color: #f8f9fa; /* Fondo ligeramente gris en el body del modal */
+  padding: 1.5rem;
 }
-
-.modal-body .table {
-    background-color: #fff; /* Fondo blanco para la tabla dentro del modal */
-    margin-bottom: 0; /* Eliminar margen inferior de la tabla en el modal */
+.modal-body .table { /* Estilo tabla dentro del modal */
+    font-size: 0.9rem;
+    box-shadow: none;
+    border: 1px solid var(--clr-border-light);
 }
-
 .modal-body .table thead th {
-    background-color: var(--primary-light); /* Color de header de tabla diferente en el modal */
-    color: var(--text-color);
-    border-bottom-color: var(--primary-color);
+    background-color: var(--clr-primary-lighter);
+    color: var(--clr-primary);
+    font-weight: 600;
+    border-bottom-color: var(--clr-border);
 }
-
 .modal-body .table tbody td {
-    border-bottom: 1px solid #e9ecef; /* Borde de fila más claro */
+     padding: 0.6rem 1rem;
 }
 
-.modal-body .table tbody tr:last-child td {
-    border-bottom: none; /* Eliminar borde de la última fila */
+.modal-footer {
+  background-color: #f8f9fa;
+  padding: 0.8rem 1.5rem;
+  border-top: 1px solid var(--clr-border-light);
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
 }
 
-/* Utility class for consistent spacing */
-.mb-5 {
-    margin-bottom: var(--margin-base) !important;
-}
-.py-4 {
-     padding-top: var(--padding-base) * 2 !important;
-     padding-bottom: var(--padding-base) * 2 !important;
-}
+/* ==================== RESPONSIVE MOBILE (Estilo tabla alternativo) ==================== */
+@media (max-width: 767px) {
+  body { padding: 0.5rem 0; }
+  .container { padding: 0 0.75rem; }
+  h1 { font-size: 1.8rem; margin-bottom: 1rem; }
+  h2 { font-size: 1.25rem; }
+  .card-body, .card-footer { padding: 1rem; }
+  .card-header { padding: 0.7rem 1rem; font-size: 1rem; }
+  .btn { padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+  .btn-sm { padding: 0.3rem 0.7rem; font-size: 0.8rem; }
+  #paymentStatus { gap: 0.8rem; } /* Menos espacio entre cards en móvil */
+  .payment-status { padding: 0.8rem; min-height: auto; } /* Altura automática en móvil */
+  .payment-status h6 { font-size: 1rem; }
+  .payment-status p { font-size: 0.85rem; }
+  .payment-status .due { font-size: 1.1rem; }
+  #monthlySummary p { flex-direction: column; align-items: flex-start; border-bottom: none; padding-bottom: 0; margin-bottom: 0.8rem;}
+  #monthlySummary strong { margin-bottom: 0.2rem; }
+  #monthlySummary small { text-align: left; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--clr-border-light); width: 100%;}
+
+
+  /* --- Tabla Responsiva: Estilo Cards --- */
+  .table-responsive {
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    overflow-x: visible; /* Ocultar scroll horizontal */
+  }
+  .table {
+    border-collapse: separate;
+    border-spacing: 0 0.8rem; /* Espacio vertical entre "cards" */
+    background-color: transparent;
+  }
+  .table thead { display: none; } /* Ocultar cabecera original */
+  .table tbody, .table tr, .table td { display: block; width: 100%; }
+
+  .table tr {
+    background-color: var(--clr-card-bg);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--clr-border-light);
+    box-shadow: var(--shadow-sm);
+    padding: 0.8rem 1rem;
+    margin-bottom: 0; /* El border-spacing se encarga */
+    position: relative; /* Para los labels */
+  }
+  .table td {
+    padding: 0.4rem 0; /* Padding vertical dentro de la celda */
+    padding-left: 50%; /* Espacio para el label */
+    position: relative;
+    border-bottom: 1px dotted var(--clr-border-light); /* Separador interno */
+    text-align: right; /* Contenido a la derecha */
+    min-height: 1.5em; /* Altura mínima */
+    display: flex;
+    align-items: center; /* Centrar verticalmente */
+    justify-content: flex-end; /* Alinear a la derecha */
+  }
+  .table td:last-child { border-bottom: none; } /* Sin borde en la última celda */
+
+  .table td::before {
+    content: attr(data-label); /* Toma el texto del atributo data-label */
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: calc(50% - 0.5rem); /* Ancho del label */
+    padding-right: 0.5rem; /* Espacio entre label y valor */
+    font-weight: 700;
+    color: var(--clr-primary-light);
+    font-size: 0.85rem;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Celda de Acciones especial */
+  .table td[data-label="Acción"] {
+      padding: 0.5rem 0 0 0; /* Quitar padding izquierdo, añadir superior */
+      text-align: center;
+      justify-content: center;
+      flex-wrap: wrap; /* Permitir que botones bajen */
+      gap: 0.5rem; /* Espacio entre botones */
+  }
+   .table td[data-label="Acción"]::before {
+       display: none; /* Ocultar el label "Acción:" */
+   }
+
+   .table tbody tr.table-warning { border-left: 4px solid var(--clr-accent); }
+   .table tbody tr.table-warning:hover { background-color: rgba(243, 156, 18, 0.1); }
+
+} /* Fin Media Query */
