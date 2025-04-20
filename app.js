@@ -405,10 +405,9 @@ function generateInvoice(payment) {
 }
 
 function generateGeneralReport() {
-  console.log('Generating general report PDF with grid lines and totals...');
+  console.log('Generating general report PDF with corrected grid...');
   const { jsPDF } = window.jspdf;
   if (!jsPDF) {
-    console.error('jsPDF library not loaded.');
     alert('La librería para generar PDFs no está disponible.');
     return;
   }
@@ -416,11 +415,6 @@ function generateGeneralReport() {
   const doc = new jsPDF();
   const margin = 20;
   let yPos = 20;
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const tableX = margin;
-  const tableY = yPos + 60; // espacio para encabezados y resumen
-  const colWidths = [70, 40, 40, 40]; // Propietario, Adeudado, Pagado, Debe
-  const rowHeight = 8;
 
   // --- Encabezado ---
   doc.setFontSize(18);
@@ -434,79 +428,88 @@ function generateGeneralReport() {
   const totalExp = expenses.reduce((s, e) => s + e.amount, 0);
   const totalPay = payments.reduce((s, p) => s + p.amount, 0);
   const balance  = totalPay - totalExp;
-  doc.setFontSize(12);
   doc.text(`Total Gastos: €${totalExp.toFixed(2)}`, margin, yPos);
   yPos += 7;
   doc.text(`Total Recaudado: €${totalPay.toFixed(2)}`, margin, yPos);
   yPos += 7;
   doc.text(`Balance: €${balance.toFixed(2)}`, margin, yPos);
+  yPos += 15;  // dejamos un poco de espacio antes de la tabla
 
-  // --- Preparar datos de la tabla ---
+  // --- Parámetros de la tabla ---
+  const colWidths = [70, 40, 40, 40];      // Anchos de columnas
+  const rowHeight = 10;                    // Alto de fila aumentado para evitar solapamientos
+  const tableX    = margin;
+  const tableY    = yPos;                  // Empezamos la tabla justo después del resumen
+
+  // --- Cabeceras ---
+  const headers = ["Propietario", "Adeudado (€)", "Pagado (€)", "Debe (€)"];
+  doc.setFontSize(10);
+  doc.setFont(undefined, 'bold');
+  headers.forEach((h, i) => {
+    const x = tableX + colWidths.slice(0, i).reduce((a, b) => a + b, 0) + 2;
+    // Centramos verticalmente: rowHeight/2 + ajuste de 3
+    doc.text(h, x, tableY + rowHeight/2 + 3);
+  });
+  doc.setFont(undefined, 'normal');
+
+  // --- Filas de datos ---
   const rows = residents.map(resident => {
     const due    = calculateTotalDue(resident);
     const paid   = payments
       .filter(p => p.resident?.name === resident.name)
       .reduce((s, p) => s + p.amount, 0);
     const remain = Math.max(0, due - paid);
-    return [resident.name, due.toFixed(2), paid.toFixed(2), remain.toFixed(2)];
+    return [
+      resident.name,
+      due.toFixed(2),
+      paid.toFixed(2),
+      remain.toFixed(2)
+    ];
   });
 
-  // Calcular totales de columnas
+  // Añadimos la fila de totales al final
   const totalDueAll    = rows.reduce((s, r) => s + parseFloat(r[1]), 0);
   const totalPaidAll   = rows.reduce((s, r) => s + parseFloat(r[2]), 0);
   const totalRemainAll = rows.reduce((s, r) => s + parseFloat(r[3]), 0);
-  const totalRow = [
+  rows.push([
     "TOTAL",
     totalDueAll.toFixed(2),
     totalPaidAll.toFixed(2),
     totalRemainAll.toFixed(2)
-  ];
-  rows.push(totalRow); // añadimos fila de totales al final
+  ]);
 
-  // --- Dibujar cabecera de tabla ---
-  doc.setFontSize(10);
-  doc.setFont(undefined, 'bold');
-  const headers = ["Propietario", "Adeudado (€)", "Pagado (€)", "Debe (€)"];
-  let x = tableX;
-  headers.forEach((h, i) => {
-    doc.text(h, x + 2, tableY + rowHeight - 2);
-    x += colWidths[i];
-  });
-  doc.setFont(undefined, 'normal');
-
-  // --- Dibujar contenido de cada celda ---
+  // Dibujamos cada celda
   rows.forEach((row, rowIndex) => {
-    const yRow = tableY + (rowIndex + 1) * rowHeight;
+    const yCell = tableY + (rowIndex + 1) * rowHeight + rowHeight/2 + 3;
     row.forEach((cell, colIndex) => {
-      const xCell = tableX + colWidths.slice(0, colIndex).reduce((a,b)=>a+b, 0) + 2;
-      // Si es la fila de totales, la pintamos en negrita
-      if (rowIndex === rows.length - 1) {
-        doc.setFont(undefined, 'bold');
-      }
-      doc.text(cell, xCell, yRow - 2);
-      if (rowIndex === rows.length - 1) {
-        doc.setFont(undefined, 'normal');
-      }
+      const xCell = tableX + colWidths.slice(0, colIndex).reduce((a, b) => a + b, 0) + 2;
+      // Negrita en la última fila de totales
+      if (rowIndex === rows.length - 1) doc.setFont(undefined, 'bold');
+      doc.text(cell, xCell, yCell);
+      if (rowIndex === rows.length - 1) doc.setFont(undefined, 'normal');
     });
   });
 
-  // --- Dibujar líneas de la cuadrícula ---
-  const tableWidth  = colWidths.reduce((a,b) => a + b, 0);
-  const tableHeight = rowHeight * (rows.length + 1);
+  // --- Cuadrícula estilo Excel ---
+  const totalRows   = rows.length + 1;                    // +1 para la cabecera
+  const tableHeight = totalRows * rowHeight;              // altura total
+  const tableWidth  = colWidths.reduce((a, b) => a + b, 0);
+
   // Líneas verticales
   let xLine = tableX;
   for (let i = 0; i <= colWidths.length; i++) {
     doc.line(xLine, tableY, xLine, tableY + tableHeight);
     if (i < colWidths.length) xLine += colWidths[i];
   }
+
   // Líneas horizontales
-  for (let i = 0; i <= rows.length + 1; i++) {
+  for (let i = 0; i <= totalRows; i++) {
     const yLine = tableY + i * rowHeight;
     doc.line(tableX, yLine, tableX + tableWidth, yLine);
   }
 
   // --- Guardar PDF ---
-  console.log('General report PDF with grid lines and totals generated.');
+  console.log('General report PDF generated with corrected grid.');
   doc.save(`ReporteGeneral_${new Date().toLocaleDateString().replace(/\//g, '-')}.pdf`);
 }
 // —––– EVENTOS —––––––––––––––––––––––––––––––––––––––––––––––––––
