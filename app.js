@@ -1,3 +1,5 @@
+// app.js
+
 // —––– CLASES —––––––––––––––––––––––––––––––––––––––––––––––––––––––
 class Property {
   constructor(name, address, type, area, coefficient) {
@@ -143,9 +145,9 @@ function updatePaymentStatus() {
           <h6>${r.name}</h6>
           <p>${r.type} (${r.area})</p>
           <p>Coef.: ${(r.coefficient*100).toFixed(3)}%</p>
-          <p>Pagado: €${paid.toFixed(2)}</p>
-          <p>Total: €${due.toFixed(2)}</p>
-          <p class="due">Debe: €${rem.toFixed(2)}</p>
+          <p>Pagado: ${paid.toFixed(2)}€</p>
+          <p>Total: ${due.toFixed(2)}€</p>
+          <p class="due">Debe: ${rem.toFixed(2)}€</p>
         </div>
       </div>`;
   }).join('');
@@ -158,9 +160,9 @@ function updateSummary() {
   const totalPay = payments.reduce((s,p) => s + p.amount, 0);
   const bal = totalPay - totalExp;
   el.innerHTML = `
-    <p><strong>Total Gastos:</strong> €${totalExp.toFixed(2)}</p>
-    <p><strong>Total Recaudado:</strong> €${totalPay.toFixed(2)}</p>
-    <p><strong>Balance:</strong> €${bal.toFixed(2)}</p>
+    <p><strong>Total Gastos:</strong> ${totalExp.toFixed(2)}€</p>
+    <p><strong>Total Recaudado:</strong> ${totalPay.toFixed(2)}€</p>
+    <p><strong>Balance:</strong> ${bal.toFixed(2)}€</p>
   `;
 }
 
@@ -179,7 +181,7 @@ function updateHistory() {
         : ''}>
       <td>${item.date.toLocaleDateString()}</td>
       <td>${item.description}${item.type==='Gasto' && item.category!=='general' ? ` (${item.category})` : ''}</td>
-      <td>€${item.amount.toFixed(2)}</td>
+      <td>${item.amount.toFixed(2)}€</td>
       <td>${item.type}</td>
       <td>
         ${item.type==='Pago'
@@ -197,7 +199,6 @@ function updateHistory() {
 
 // —––– CÁLCULOS —––––––––––––––––––––––––––––––––––––––––––––––––––
 function calculateTotalDue(resident) {
-  // Solo reparte gastos extraordinarios (no 'general')
   const totalExtra = expenses
     .filter(e => e.category !== 'general')
     .reduce((s, e) => s + e.amount, 0);
@@ -261,14 +262,14 @@ function showExpenseDetail(amount, category) {
   const modalBody  = document.getElementById('expenseDetailContent');
   const modalTitle = document.getElementById('expenseTitle');
   const parsed     = parseFloat(amount);
-  modalTitle.textContent = `Detalle Gasto ${category||''}: €${parsed.toFixed(2)}`;
+  modalTitle.textContent = `Detalle Gasto ${category||''}: ${parsed.toFixed(2)}€`;
   modalBody.innerHTML = residents.map(r => {
     const part = parsed * r.coefficient;
     return `
       <tr>
         <td>${r.name}</td>
         <td>${(r.coefficient*100).toFixed(3)}%</td>
-        <td>€${part.toFixed(2)}</td>
+        <td>${part.toFixed(2)}€</td>
       </tr>`;
   }).join('');
   new bootstrap.Modal(document.getElementById('expenseDetailModal')).show();
@@ -285,7 +286,7 @@ function generateInvoice(payment) {
   doc.text(`Propietario: ${payment.resident.name}`, 20, y); y+=10;
   doc.text(`Dirección: AV SANT SALVADOR 60, ${payment.resident.address}`, 20, y); y+=10;
   doc.text(`Coeficiente: ${(payment.resident.coefficient*100).toFixed(3)}%`, 20, y); y+=10;
-  doc.text(`Importe: €${payment.amount.toFixed(2)}`, 20, y);
+  doc.text(`Importe: ${payment.amount.toFixed(2)}€`, 20, y);
   const num = payment.id.slice(-6).toUpperCase();
   doc.text(`Factura Nº ${num}`, 190, 20, { align: 'right' });
   doc.save(`Factura_${payment.resident.name.replace(/ /g,'_')}_${num}.pdf`);
@@ -301,37 +302,33 @@ function generateExpenseReport(expenseId) {
   const margin = 20;
   let y = margin;
 
-  // — Encabezado
   doc.setFontSize(18);
   doc.text(`Gasto: ${exp.description}`, margin, y);
   y += 10;
   doc.setFontSize(12);
   doc.text(`Fecha: ${exp.date.toLocaleDateString()}`, margin, y);
   y += 8;
-  doc.text(`Importe Total: €${exp.amount.toFixed(2)}`, margin, y);
+  doc.text(`Importe Total: ${exp.amount.toFixed(2)}€`, margin, y);
   y += 12;
 
-  // — Tabla con líneas estilo Excel
   const headers = ['Propietario', 'Coef. (%)', 'Parte (€)'];
   const colWidths = [80, 40, 50];
   const rowHeight = 8;
   const tableX = margin;
   const tableY = y;
 
-  // Cabecera
   doc.setFontSize(10).setFont(undefined, 'bold');
   headers.forEach((h, i) => {
     doc.text(h, tableX + 2 + colWidths.slice(0, i).reduce((a,b)=>a+b,0), y + 6);
   });
   doc.setFont(undefined, 'normal');
 
-  // Filas de datos
-  expRows = residents.map(r => {
+  const expRows = residents.map(r => {
     const part = exp.amount * r.coefficient;
     return [
       r.name,
       (r.coefficient * 100).toFixed(3) + '%',
-      '€' + part.toFixed(2)
+      part.toFixed(2) + '€'
     ];
   });
 
@@ -342,24 +339,20 @@ function generateExpenseReport(expenseId) {
     });
   });
 
-  // Dibujar líneas de cuadrícula
   const totalRows = expRows.length + 1;
   const tableHeight = totalRows * rowHeight;
   const tableWidth = colWidths.reduce((a,b)=>a+b, 0);
 
-  // Líneas horizontales
   for (let i = 0; i <= totalRows; i++) {
     const yLine = tableY + i * rowHeight;
     doc.line(tableX, yLine, tableX + tableWidth, yLine);
   }
-  // Líneas verticales
   let xLine = tableX;
   for (let i = 0; i <= colWidths.length; i++) {
     doc.line(xLine, tableY, xLine, tableY + tableHeight);
     if (i < colWidths.length) xLine += colWidths[i];
   }
 
-  // Guardar PDF
   doc.save(`DetalleGasto_${exp.description.replace(/\s+/g,'_')}.pdf`);
 }
 
@@ -375,7 +368,6 @@ function generateGeneralReport() {
   const margin = 20;
   let yPos = margin;
 
-  // Encabezado
   doc.setFontSize(18);
   doc.text("Reporte General de Comunidad", margin, yPos);
   yPos += 15;
@@ -383,18 +375,13 @@ function generateGeneralReport() {
   doc.text(`Fecha del Reporte: ${new Date().toLocaleDateString()}`, margin, yPos);
   yPos += 20;
 
-  // Resumen
   const totalExp = expenses.reduce((s, e) => s + e.amount, 0);
   const totalPay = payments.reduce((s, p) => s + p.amount, 0);
   const balance  = totalPay - totalExp;
-  doc.text(`Total Gastos: €${totalExp.toFixed(2)}`, margin, yPos);
-  yPos += 7;
-  doc.text(`Total Recaudado: €${totalPay.toFixed(2)}`, margin, yPos);
-  yPos += 7;
-  doc.text(`Balance: €${balance.toFixed(2)}`, margin, yPos);
-  yPos += 15;
+  doc.text(`Total Gastos: ${totalExp.toFixed(2)}€`, margin, yPos); yPos+=7;
+  doc.text(`Total Recaudado: ${totalPay.toFixed(2)}€`, margin, yPos); yPos+=7;
+  doc.text(`Balance: ${balance.toFixed(2)}€`, margin, yPos); yPos+=15;
 
-  // Tabla de estados
   const colW = [70, 40, 40, 40];
   const rh = 10;
   const tx = margin;
@@ -411,12 +398,25 @@ function generateGeneralReport() {
     const due = calculateTotalDue(res);
     const paid = payments.filter(p=>p.resident.name===res.name).reduce((s,p)=>s+p.amount,0);
     const rem = Math.max(0, due - paid);
-    return [res.name, due.toFixed(2), paid.toFixed(2), rem.toFixed(2)];
+    return [
+      res.name,
+      due.toFixed(2) + '€',
+      paid.toFixed(2) + '€',
+      rem.toFixed(2) + '€'
+    ];
   });
-  const sumDue = rows.reduce((s,r)=>s+parseFloat(r[1]),0);
-  const sumPaid = rows.reduce((s,r)=>s+parseFloat(r[2]),0);
-  const sumRem = rows.reduce((s,r)=>s+parseFloat(r[3]),0);
-  rows.push(["TOTAL", sumDue.toFixed(2), sumPaid.toFixed(2), sumRem.toFixed(2)]);
+  const sums = rows.reduce((acc,row) => {
+    acc.due += parseFloat(row[1]);
+    acc.paid += parseFloat(row[2]);
+    acc.rem += parseFloat(row[3]);
+    return acc;
+  }, { due:0, paid:0, rem:0 });
+  rows.push([
+    "TOTAL",
+    sums.due.toFixed(2) + '€',
+    sums.paid.toFixed(2) + '€',
+    sums.rem.toFixed(2) + '€'
+  ]);
 
   rows.forEach((row,i) => {
     const yCell = ty + (i+1)*rh + rh/2 + 3;
@@ -427,16 +427,13 @@ function generateGeneralReport() {
     });
   });
 
-  // cuadrícula
   const tRows = rows.length + 1;
   const tH = tRows * rh;
   const tW = colW.reduce((a,b)=>a+b,0);
-  // horizontales
   for(let i=0;i<=tRows;i++){
     const yL = ty + i*rh;
     doc.line(tx, yL, tx+tW, yL);
   }
-  // verticales
   let xL = tx;
   for(let i=0;i<=colW.length;i++){
     doc.line(xL, ty, xL, ty+tH);
